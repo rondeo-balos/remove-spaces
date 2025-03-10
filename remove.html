@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remove Spaces from Filenames in Folder</title>
+</head>
+<body>
+    <h2>Select a Folder</h2>
+    <input type="file" id="folderInput" webkitdirectory multiple>
+    <button onclick="renameFiles()">Rename Files</button>
+    <button onclick="downloadAll()">Download All Files</button>
+    <ul id="fileList"></ul>
+
+    <script>
+        let renamedFiles = [];
+
+        function renameFiles() {
+            const folderInput = document.getElementById("folderInput");
+            const fileList = document.getElementById("fileList");
+            fileList.innerHTML = "";
+            renamedFiles = [];
+
+            if (!folderInput.files.length) {
+                alert("Please select a folder first.");
+                return;
+            }
+
+            Array.from(folderInput.files).forEach(file => {
+                let newFileName = file.name.replace(/\s+/g, "-").replace(/-+/g, "-");
+                let listItem = document.createElement("li");
+                listItem.textContent = `Original: ${file.name} → Renamed: ${newFileName}`;
+                fileList.appendChild(listItem);
+                
+                renamedFiles.push({ file, newFileName });
+            });
+        }
+
+        function downloadAll() {
+            if (renamedFiles.length === 0) {
+                alert("No files to download. Please rename files first.");
+                return;
+            }
+
+            renamedFiles.forEach(({ file, newFileName }) => {
+                const blob = new Blob([file], { type: file.type });
+                const link = document.createElement("a");
+                link.href = URL.createObjectURL(blob);
+                link.download = newFileName;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+        }
+    </script>
+</body>
+</html>
