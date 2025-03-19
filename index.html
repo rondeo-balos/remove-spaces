@@ -4,13 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Remove Spaces from Filenames in Folder</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body>
-    <h2>Select a Folder</h2>
-    <input type="file" id="folderInput" webkitdirectory multiple>
-    <button onclick="renameFiles()">Rename Files</button>
-    <button onclick="downloadAll()">Download All Files</button>
-    <ul id="fileList"></ul>
+
+    <div class="w-full min-h-screen flex flex-row items-center justify-center">
+        <div class="max-w-[500px] w-full border border-gray-200 rounded-3xl mx-auto shadow-lg bg-gray-50 divide-y divide-gray-200">
+            <h2 class="p-4 md:p-6">Select a Folder</h2>
+            <div class="p-4 md:p-6 space-y-8">
+                <input type="file" id="folderInput" webkitdirectory multiple class="w-full p-10 border-2 border-dashed text-center rounded-xl"/>
+
+                <ul id="fileList"></ul>
+
+                <div class="flex flex-row gap-4">
+                    <button onclick="renameFiles()" class="rounded-lg border border-gray-400 p-3 text-center w-full bg-white shadow cursor-pointer transition-transform hover:scale-105">Rename Files</button>
+                    <button onclick="downloadAll()" class="rounded-lg border border-stone-700 p-3 text-center w-full bg-stone-900 shadow cursor-pointer transition-transform hover:scale-105 text-white">Download All Files</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         let renamedFiles = [];
